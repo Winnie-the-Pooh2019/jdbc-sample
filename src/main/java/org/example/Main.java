@@ -1,12 +1,10 @@
 package org.example;
 
 import org.example.service.MusicService;
-import org.postgresql.ds.PGSimpleDataSource;
 
 import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class Main {
 
@@ -19,7 +17,6 @@ public class Main {
             throw new RuntimeException(e);
         }
 
-//        service.findAll().orElse(new ArrayList<>()).forEach(System.out::println);
-        service.findById(1).ifPresent(System.out::println);
+        service.findAll().orElse(new ArrayList<>()).forEach(System.out::println);
     }
 }

@@ -54,16 +54,22 @@ public class MusicService {
         }
     }
 
-    public Optional<Music> findByName(String name) throws SQLException {
+    public Optional<Music> findByName(String name) {
         String sql = "select * from study.music where name = ?";
-        PreparedStatement preparedStatement = connection.prepareStatement(sql);
-        preparedStatement.setString(1, name);
-        ResultSet resultSet = preparedStatement.executeQuery();
+        PreparedStatement preparedStatement;
+        try {
+            preparedStatement = connection.prepareStatement(sql);
 
-        if (resultSet.next()) {
-            return Optional.of(new Music(resultSet.getInt("id"), resultSet.getString("name")));
+            preparedStatement.setString(1, name);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                return Optional.of(new Music(resultSet.getInt("id"), resultSet.getString("name")));
+            }
+
+            return Optional.empty();
+        } catch (SQLException e) {
+            return Optional.empty();
         }
-
-        return Optional.empty();
     }
 }
